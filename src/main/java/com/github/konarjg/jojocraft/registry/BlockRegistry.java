@@ -2,20 +2,17 @@ package com.github.konarjg.jojocraft.registry;
 
 import com.github.konarjg.jojocraft.objectholder.JojoBlocks;
 import com.github.konarjg.jojocraft.objectholder.JojoItems;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
+import net.minecraft.block.Block;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @Mod.EventBusSubscriber
-public class ItemRegistry {
+public class BlockRegistry {
     @SubscribeEvent
-    public static void registerItems(RegistryEvent.Register<Item> event) {
+    public static void registerBlocks(RegistryEvent.Register<Block> event) {
         event.getRegistry().registerAll(
-                JojoItems.STONE_MASK,
-                new ItemBlock(JojoBlocks.COFFIN).setRegistryName(JojoBlocks.COFFIN.getRegistryName())
+                JojoBlocks.COFFIN
         );
     }
-
 }

@@ -1,0 +1,15 @@
+{
+  "variants": {
+    "facing=north,part=head": { "model": "jojocraft:coffin1", "y": 180 },
+    "facing=north,part=foot": { "model": "jojocraft:coffin2" },
+
+    "facing=east,part=head": { "model": "jojocraft:coffin1", "y": -90 },
+    "facing=east,part=foot": { "model": "jojocraft:coffin2", "y": 90 },
+
+    "facing=south,part=head": { "model": "jojocraft:coffin1" },
+    "facing=south,part=foot": { "model": "jojocraft:coffin2", "y": 180 },
+
+    "facing=west,part=head": { "model": "jojocraft:coffin1", "y": -270 },
+    "facing=west,part=foot": { "model": "jojocraft:coffin2", "y": 270 }
+  }
+}

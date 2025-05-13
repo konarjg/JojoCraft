@@ -1,5 +1,6 @@
 package com.github.konarjg.jojocraft.event;
 
+import com.github.konarjg.jojocraft.JojoCraft;
 import com.github.konarjg.jojocraft.power.Power;
 import com.github.konarjg.jojocraft.power.PowerProvider;
 import net.minecraft.entity.Entity;
@@ -8,8 +9,15 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.apache.logging.log4j.Level;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 @Mod.EventBusSubscriber
 public class PowerHandler {
@@ -21,5 +29,20 @@ public class PowerHandler {
         if (event.getObject() instanceof EntityPlayer) {
             event.addCapability(new ResourceLocation("jojocraft", "power"), new PowerProvider());
         }
+    }
+
+    @SubscribeEvent
+    public static void onPlayerClone(PlayerEvent.Clone event) {
+        if (!event.isWasDeath()) {
+            return;
+        }
+
+        EntityPlayer oldPlayer = event.getOriginal();
+        EntityPlayer newPlayer = event.getEntityPlayer();
+
+        Power oldPower = oldPlayer.getCapability(PowerHandler.CAPABILITY_POWER, null);
+        Power newPower = newPlayer.getCapability(PowerHandler.CAPABILITY_POWER, null);
+
+        newPower.setType(oldPower.getType());
     }
 }

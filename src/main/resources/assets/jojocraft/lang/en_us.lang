@@ -1,2 +1,5 @@
 itemGroup.jojocraft=JojoCraft
 item.stone_mask.name=Stone Mask
+effect.vampire=Vampire
+effect.hamon=Hamon User
+tile.coffin.name=Coffin
