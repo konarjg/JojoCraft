@@ -14,6 +14,8 @@ public class ItemRegistry {
     public static void registerItems(RegistryEvent.Register<Item> event) {
         event.getRegistry().registerAll(
                 JojoItems.STONE_MASK,
+                JojoItems.SPIN_ARROW,
+                JojoItems.STEEL_BALL,
                 new ItemBlock(JojoBlocks.COFFIN).setRegistryName(JojoBlocks.COFFIN.getRegistryName())
         );
     }

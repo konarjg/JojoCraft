@@ -23,7 +23,7 @@ public class HamonHandler {
 
         Power power = player.getCapability(PowerHandler.CAPABILITY_POWER, null);
 
-        if (power.getType() != PowerType.HAMON) {
+        if (power.getType() != PowerType.HAMON || power.getType() != PowerType.SPIN) {
             return;
         }
 
@@ -39,7 +39,7 @@ public class HamonHandler {
         EntityPlayer player = (EntityPlayer) event.getSource().getTrueSource();
         Power power = player.getCapability(PowerHandler.CAPABILITY_POWER, null);
 
-        if (power.getType() != PowerType.HAMON || player.isInsideOfMaterial(Material.WATER)) {
+        if (power.getType() != PowerType.HAMON || power.getType() != PowerType.SPIN || player.isInsideOfMaterial(Material.WATER)) {
             return;
         }
 
@@ -61,7 +61,7 @@ public class HamonHandler {
 
         Power power = event.getEntity().getCapability(PowerHandler.CAPABILITY_POWER, null);
 
-        if (power.getType() != PowerType.HAMON) {
+        if (power.getType() != PowerType.HAMON || power.getType() != PowerType.SPIN) {
             return;
         }
 

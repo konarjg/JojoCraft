@@ -13,6 +13,7 @@ import net.minecraft.server.MinecraftServer;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CommandSetPower extends CommandBase {
 
@@ -23,7 +24,7 @@ public class CommandSetPower extends CommandBase {
 
     @Override
     public String getUsage(ICommandSender sender) {
-        return "/setPower <power> - Sets the power of this player";
+        return "/setPower <power> - Sets the JoJo's Bizarre Adventure power of this player";
     }
 
     @Override
@@ -34,7 +35,7 @@ public class CommandSetPower extends CommandBase {
     @Override
     public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, net.minecraft.util.math.BlockPos pos) {
         if (args.length == 1) {
-            return Arrays.asList("HAMON", "VAMPIRE", "NONE");
+            return Arrays.stream(PowerType.values()).map(power -> power.name()).collect(Collectors.toList());
         }
 
         return super.getTabCompletions(server, sender, args, pos);

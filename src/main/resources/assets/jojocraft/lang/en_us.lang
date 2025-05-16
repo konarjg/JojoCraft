@@ -1,5 +1,7 @@
 itemGroup.jojocraft=JojoCraft
 item.stone_mask.name=Stone Mask
+item.spin_arrow.name=Spin Arrow
+item.steelball.name=Steel Ball
 effect.vampire=Vampire
 effect.hamon=Hamon User
 tile.coffin.name=Coffin

@@ -1,18 +1,21 @@
 package com.github.konarjg.jojocraft;
 
 import com.github.konarjg.jojocraft.creativetab.JojoCreativeTab;
+import com.github.konarjg.jojocraft.entity.EntitySpinArrow;
+import com.github.konarjg.jojocraft.event.HamonHandler;
 import com.github.konarjg.jojocraft.event.PowerHandler;
+import com.github.konarjg.jojocraft.event.SpinHandler;
 import com.github.konarjg.jojocraft.event.VampirismHandler;
 import com.github.konarjg.jojocraft.objectholder.JojoPotions;
 import com.github.konarjg.jojocraft.power.Power;
 import com.github.konarjg.jojocraft.power.PowerStorage;
-import com.github.konarjg.jojocraft.registry.BlockRegistry;
-import com.github.konarjg.jojocraft.registry.CommandRegistry;
-import com.github.konarjg.jojocraft.registry.ItemRegistry;
-import com.github.konarjg.jojocraft.registry.ModelRegistry;
+import com.github.konarjg.jojocraft.registry.*;
+import net.minecraft.client.renderer.entity.RenderArrow;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityManager;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -34,6 +37,7 @@ public class JojoCraft {
         MinecraftForge.EVENT_BUS.register(BlockRegistry.class);
         MinecraftForge.EVENT_BUS.register(ItemRegistry.class);
         MinecraftForge.EVENT_BUS.register(ModelRegistry.class);
+        MinecraftForge.EVENT_BUS.register(EntityRegistry.class);
         CapabilityManager.INSTANCE.register(Power.class, new PowerStorage(), Power::new);
     }
 
@@ -43,8 +47,11 @@ public class JojoCraft {
             JojoPotions.VAMPIRE_EFFECT,
             JojoPotions.HAMON_EFFECT
         );
+
         MinecraftForge.EVENT_BUS.register(PowerHandler.class);
         MinecraftForge.EVENT_BUS.register(VampirismHandler.class);
+        MinecraftForge.EVENT_BUS.register(HamonHandler.class);
+        MinecraftForge.EVENT_BUS.register(SpinHandler.class);
     }
 
     @Mod.EventHandler
