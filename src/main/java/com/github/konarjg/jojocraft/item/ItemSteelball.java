@@ -3,6 +3,8 @@ package com.github.konarjg.jojocraft.item;
 import com.github.konarjg.jojocraft.JojoCraft;
 import com.github.konarjg.jojocraft.Tags;
 import com.github.konarjg.jojocraft.entity.EntitySteelball;
+import com.github.konarjg.jojocraft.event.PowerHandler;
+import com.github.konarjg.jojocraft.power.PowerType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -36,6 +38,12 @@ public class ItemSteelball extends Item {
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
         ItemStack itemstack = playerIn.getHeldItem(handIn);
+
+        if (playerIn.getCapability(PowerHandler.CAPABILITY_POWER, null).getType() != PowerType.SPIN
+                && playerIn.getCapability(PowerHandler.CAPABILITY_POWER, null).getType() != PowerType.GOLDEN_SPIN) {
+            return ActionResult.newResult(EnumActionResult.PASS, itemstack);
+        }
+
 
         if (!playerIn.capabilities.isCreativeMode) {
             itemstack.shrink(1);

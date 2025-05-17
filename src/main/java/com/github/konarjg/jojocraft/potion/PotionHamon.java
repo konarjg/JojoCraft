@@ -1,5 +1,6 @@
 package com.github.konarjg.jojocraft.potion;
 
+import com.github.konarjg.jojocraft.Tags;
 import com.github.konarjg.jojocraft.power.PowerType;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
@@ -11,7 +12,7 @@ import net.minecraft.world.World;
 public class PotionHamon extends Potion {
     public PotionHamon() {
         super(false, 0xffff00);
-        setRegistryName(new ResourceLocation("jojocraft", "hamon"));
+        setRegistryName(new ResourceLocation(Tags.MOD_ID, "hamon"));
         setPotionName("effect.hamon");
     }
 

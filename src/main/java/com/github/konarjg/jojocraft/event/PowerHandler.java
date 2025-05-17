@@ -1,6 +1,7 @@
 package com.github.konarjg.jojocraft.event;
 
 import com.github.konarjg.jojocraft.JojoCraft;
+import com.github.konarjg.jojocraft.Tags;
 import com.github.konarjg.jojocraft.power.Power;
 import com.github.konarjg.jojocraft.power.PowerProvider;
 import net.minecraft.entity.Entity;
@@ -27,7 +28,7 @@ public class PowerHandler {
     @SubscribeEvent
     public static void attachCapability(AttachCapabilitiesEvent<Entity> event) {
         if (event.getObject() instanceof EntityPlayer) {
-            event.addCapability(new ResourceLocation("jojocraft", "power"), new PowerProvider());
+            event.addCapability(new ResourceLocation(Tags.MOD_ID, "power"), new PowerProvider());
         }
     }
 

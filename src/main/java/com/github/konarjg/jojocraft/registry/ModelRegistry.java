@@ -24,8 +24,12 @@ public class ModelRegistry
     public static void registerModels(ModelRegistryEvent event)
     {
         registerModel(JojoItems.STONE_MASK, 0);
+        registerModel(JojoItems.PILLARMAN_STONE_MASK, 0);
+        registerModel(JojoItems.AJA, 0);
+        registerModel(JojoItems.AJA_STONE_MASK, 0);
         registerModel(JojoItems.SPIN_ARROW, 0);
         registerModel(JojoItems.STEEL_BALL, 0);
+        registerModel(Item.getItemFromBlock(JojoBlocks.BLACK_PLANKS), 0);
         registerModel(Item.getItemFromBlock(JojoBlocks.COFFIN), 0);
 
         RenderingRegistry.registerEntityRenderingHandler(EntitySpinArrow.class, manager ->

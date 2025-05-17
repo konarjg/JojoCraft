@@ -1,7 +1,15 @@
 itemGroup.jojocraft=JojoCraft
 item.stone_mask.name=Stone Mask
+item.pillarman_stone_mask.name=Pillarman Stone Mask
+item.aja_stone_mask.name=Aja Stone Mask
+item.aja.name=Red Stone of Aja
 item.spin_arrow.name=Spin Arrow
 item.steelball.name=Steel Ball
 effect.vampire=Vampire
+effect.pillarman=Pillarman
+effect.ultimate_life_form=Ultimate Life Form
 effect.hamon=Hamon User
+effect.spin=Spin User
+effect.golden_spin=Golden Spin User
 tile.coffin.name=Coffin
+tile.black_planks.name=Black Planks

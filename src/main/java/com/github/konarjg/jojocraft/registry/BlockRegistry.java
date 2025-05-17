@@ -12,7 +12,8 @@ public class BlockRegistry {
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
         event.getRegistry().registerAll(
-                JojoBlocks.COFFIN
+                JojoBlocks.COFFIN,
+                JojoBlocks.BLACK_PLANKS
         );
     }
 }

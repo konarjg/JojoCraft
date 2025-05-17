@@ -65,7 +65,7 @@ public class VampirismHandler {
 
         Power power = player.getCapability(PowerHandler.CAPABILITY_POWER, null);
 
-        if (power.getType() != PowerType.VAMPIRE) {
+        if (power.getType() != PowerType.VAMPIRE && power.getType() != PowerType.PILLAR_MAN && power.getType() != PowerType.ULTIMATE_LIFE_FORM) {
             return;
         }
 
@@ -74,7 +74,7 @@ public class VampirismHandler {
         boolean canSeeSky = world.canBlockSeeSky(player.getPosition());
         boolean isDaytime = world.isDaytime();
 
-        if (!canSeeSky || !isDaytime) {
+        if (!canSeeSky || !isDaytime || power.getType() == PowerType.ULTIMATE_LIFE_FORM) {
             return;
         }
 
@@ -90,7 +90,7 @@ public class VampirismHandler {
 
         Power power = event.getEntity().getCapability(PowerHandler.CAPABILITY_POWER, null);
 
-        if (power.getType() != PowerType.VAMPIRE) {
+        if (power.getType() != PowerType.VAMPIRE && power.getType() != PowerType.PILLAR_MAN) {
             return;
         }
 
@@ -110,7 +110,7 @@ public class VampirismHandler {
         EntityPlayer player = (EntityPlayer) event.getSource().getTrueSource();
         Power power = player.getCapability(PowerHandler.CAPABILITY_POWER, null);
 
-        if (power.getType() != PowerType.VAMPIRE) {
+        if (power.getType() != PowerType.VAMPIRE && power.getType() != PowerType.PILLAR_MAN && power.getType() != PowerType.ULTIMATE_LIFE_FORM) {
             return;
         }
 

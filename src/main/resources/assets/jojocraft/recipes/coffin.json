@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PGP",
+    "PPP"
+  ],
+  "key": {
+    "P": {
+      "item": "jojocraft:black_planks"
+    },
+    "G": {
+      "item": "minecraft:gold_block"
+    }
+  },
+  "result": {
+    "item": "jojocraft:coffin",
+    "count": 1
+  }
+}

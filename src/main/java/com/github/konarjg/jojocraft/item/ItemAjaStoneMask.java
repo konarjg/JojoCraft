@@ -8,12 +8,12 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
-public class ItemStoneMask extends ItemArmor {
-    public ItemStoneMask() {
+public class ItemAjaStoneMask extends ItemArmor {
+    public ItemAjaStoneMask() {
         super(ArmorMaterial.CHAIN, 0, EntityEquipmentSlot.HEAD);
         setCreativeTab(JojoCraft.creativeTab);
-        setRegistryName(new ResourceLocation(Tags.MOD_ID, "stone_mask"));
-        setTranslationKey("stone_mask");
+        setRegistryName(new ResourceLocation(Tags.MOD_ID, "aja_stone_mask"));
+        setTranslationKey("aja_stone_mask");
     }
 
     @Override
@@ -23,6 +23,6 @@ public class ItemStoneMask extends ItemArmor {
 
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type) {
-        return Tags.MOD_ID + ":textures/models/armor/stone_mask.png";
+        return Tags.MOD_ID + ":textures/models/armor/aja_stone_mask.png";
     }
 }

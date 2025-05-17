@@ -14,9 +14,13 @@ public class ItemRegistry {
     public static void registerItems(RegistryEvent.Register<Item> event) {
         event.getRegistry().registerAll(
                 JojoItems.STONE_MASK,
+                JojoItems.PILLARMAN_STONE_MASK,
+                JojoItems.AJA_STONE_MASK,
+                JojoItems.AJA,
                 JojoItems.SPIN_ARROW,
                 JojoItems.STEEL_BALL,
-                new ItemBlock(JojoBlocks.COFFIN).setRegistryName(JojoBlocks.COFFIN.getRegistryName())
+                new ItemBlock(JojoBlocks.COFFIN).setRegistryName(JojoBlocks.COFFIN.getRegistryName()),
+                new ItemBlock(JojoBlocks.BLACK_PLANKS).setRegistryName(JojoBlocks.BLACK_PLANKS.getRegistryName())
         );
     }
 

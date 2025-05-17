@@ -1,5 +1,6 @@
 package com.github.konarjg.jojocraft.potion;
 
+import com.github.konarjg.jojocraft.Tags;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.ResourceLocation;
@@ -7,7 +8,7 @@ import net.minecraft.util.ResourceLocation;
 public class PotionVampire extends Potion {
     public PotionVampire() {
         super(false, 0x200000);
-        setRegistryName(new ResourceLocation("jojocraft", "vampire"));
+        setRegistryName(new ResourceLocation(Tags.MOD_ID, "vampire"));
         setPotionName("effect.vampire");
     }
 

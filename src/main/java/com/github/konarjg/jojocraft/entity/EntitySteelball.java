@@ -4,10 +4,13 @@ import com.github.konarjg.jojocraft.event.PowerHandler;
 import com.github.konarjg.jojocraft.objectholder.JojoDamageSources;
 import com.github.konarjg.jojocraft.objectholder.JojoItems;
 import com.github.konarjg.jojocraft.power.PowerType;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.entity.projectile.ProjectileHelper;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -62,9 +65,35 @@ public class EntitySteelball extends EntityArrow {
         }
     }
 
+    @Override
+    protected void onHit(RayTraceResult result) {
+        if (shootingEntity == null || !shootingEntity.hasCapability(PowerHandler.CAPABILITY_POWER, null) ||
+                (shootingEntity.getCapability(PowerHandler.CAPABILITY_POWER, null).getType() != PowerType.SPIN &&
+                        shootingEntity.getCapability(PowerHandler.CAPABILITY_POWER, null).getType() != PowerType.GOLDEN_SPIN)) {
+            return;
+        }
+
+        if (shootingEntity.getCapability(PowerHandler.CAPABILITY_POWER, null).getType() == PowerType.GOLDEN_SPIN
+                && result.typeOfHit == RayTraceResult.Type.BLOCK) {
+            BlockPos pos = result.getBlockPos();
+            IBlockState state = world.getBlockState(pos);
+
+            world.destroyBlock(pos, true);
+            this.setDead();
+            return;
+        }
+
+        super.onHit(result);
+    }
+
 
     @Override
     protected void arrowHit(EntityLivingBase living) {
+        if (shootingEntity.getCapability(PowerHandler.CAPABILITY_POWER, null).getType() == PowerType.GOLDEN_SPIN) {
+            living.attackEntityFrom(JojoDamageSources.GOLDEN_SPIN_DAMAGE_SOURCE, 10f);
+            return;
+        }
+
         living.attackEntityFrom(JojoDamageSources.SPIN_DAMAGE_SOURCE, 10f);
     }
 

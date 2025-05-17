@@ -4,16 +4,17 @@ import com.github.konarjg.jojocraft.JojoCraft;
 import com.github.konarjg.jojocraft.Tags;
 import net.minecraft.entity.Entity;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
-public class ItemStoneMask extends ItemArmor {
-    public ItemStoneMask() {
-        super(ArmorMaterial.CHAIN, 0, EntityEquipmentSlot.HEAD);
+public class ItemPillarmanStoneMask extends ItemArmor {
+    public ItemPillarmanStoneMask() {
+        super(ItemArmor.ArmorMaterial.CHAIN, 0, EntityEquipmentSlot.HEAD);
         setCreativeTab(JojoCraft.creativeTab);
-        setRegistryName(new ResourceLocation(Tags.MOD_ID, "stone_mask"));
-        setTranslationKey("stone_mask");
+        setRegistryName(new ResourceLocation(Tags.MOD_ID, "pillarman_stone_mask"));
+        setTranslationKey("pillarman_stone_mask");
     }
 
     @Override
@@ -23,6 +24,6 @@ public class ItemStoneMask extends ItemArmor {
 
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type) {
-        return Tags.MOD_ID + ":textures/models/armor/stone_mask.png";
+        return Tags.MOD_ID + ":textures/models/armor/pillarman_stone_mask.png";
     }
 }
