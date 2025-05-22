@@ -4,6 +4,8 @@ import com.github.konarjg.jojocraft.JojoCraft;
 import com.github.konarjg.jojocraft.Tags;
 import com.github.konarjg.jojocraft.power.Power;
 import com.github.konarjg.jojocraft.power.PowerProvider;
+import com.github.konarjg.jojocraft.stand.capability.Stand;
+import com.github.konarjg.jojocraft.stand.capability.StandProvider;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -29,6 +31,7 @@ public class PowerHandler {
     public static void attachCapability(AttachCapabilitiesEvent<Entity> event) {
         if (event.getObject() instanceof EntityPlayer) {
             event.addCapability(new ResourceLocation(Tags.MOD_ID, "power"), new PowerProvider());
+            event.addCapability(new ResourceLocation(Tags.MOD_ID, "stand"), new StandProvider());
         }
     }
 
@@ -43,7 +46,6 @@ public class PowerHandler {
 
         Power oldPower = oldPlayer.getCapability(PowerHandler.CAPABILITY_POWER, null);
         Power newPower = newPlayer.getCapability(PowerHandler.CAPABILITY_POWER, null);
-
         newPower.setType(oldPower.getType());
     }
 }

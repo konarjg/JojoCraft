@@ -3,6 +3,8 @@ package com.github.konarjg.jojocraft.registry;
 import com.github.konarjg.jojocraft.Tags;
 import com.github.konarjg.jojocraft.entity.EntitySpinArrow;
 import com.github.konarjg.jojocraft.entity.EntitySteelball;
+import com.github.konarjg.jojocraft.entity.npc.EntityBaronZeppeli;
+import com.github.konarjg.jojocraft.entity.render.RenderBaronZeppeli;
 import com.github.konarjg.jojocraft.entity.render.RenderSteelball;
 import com.github.konarjg.jojocraft.objectholder.JojoBlocks;
 import com.github.konarjg.jojocraft.objectholder.JojoItems;
@@ -29,6 +31,7 @@ public class ModelRegistry
         registerModel(JojoItems.AJA_STONE_MASK, 0);
         registerModel(JojoItems.SPIN_ARROW, 0);
         registerModel(JojoItems.STEEL_BALL, 0);
+        registerModel(JojoItems.STAND_ARROW, 0);
         registerModel(Item.getItemFromBlock(JojoBlocks.BLACK_PLANKS), 0);
         registerModel(Item.getItemFromBlock(JojoBlocks.COFFIN), 0);
 
@@ -43,6 +46,10 @@ public class ModelRegistry
 
         RenderingRegistry.registerEntityRenderingHandler(EntitySteelball.class,manager ->
                 new RenderSteelball(manager)
+        );
+
+        RenderingRegistry.registerEntityRenderingHandler(EntityBaronZeppeli.class, manager ->
+                new RenderBaronZeppeli(manager)
         );
     }
 

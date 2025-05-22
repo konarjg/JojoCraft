@@ -2,7 +2,9 @@ package com.github.konarjg.jojocraft.registry;
 
 import com.github.konarjg.jojocraft.Tags;
 import com.github.konarjg.jojocraft.entity.EntitySpinArrow;
+import com.github.konarjg.jojocraft.entity.EntityStand;
 import com.github.konarjg.jojocraft.entity.EntitySteelball;
+import com.github.konarjg.jojocraft.entity.npc.EntityBaronZeppeli;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -14,6 +16,8 @@ import net.minecraftforge.fml.common.registry.EntityEntryBuilder;
 public class EntityRegistry {
     public static final String SPIN_ARROW_ID = "spin_arrow";
     public static final String STEEL_BALL_ID = "steelball";
+    public static final String BARON_ZEPPELI_ID = "baron_zeppeli";
+    public static final String STAND_ID = "stand";
 
 
     @SubscribeEvent
@@ -29,6 +33,18 @@ public class EntityRegistry {
                         .entity(EntitySteelball.class)
                         .id(new ResourceLocation(Tags.MOD_ID, STEEL_BALL_ID), 2)
                         .name(STEEL_BALL_ID)
+                        .tracker(64, 3, true)
+                        .build(),
+                EntityEntryBuilder.create()
+                        .entity(EntityBaronZeppeli.class)
+                        .id(new ResourceLocation(Tags.MOD_ID, BARON_ZEPPELI_ID), 3)
+                        .name(BARON_ZEPPELI_ID)
+                        .tracker(64, 3, true)
+                        .build(),
+                EntityEntryBuilder.create()
+                        .entity(EntityStand.class)
+                        .id(new ResourceLocation(Tags.MOD_ID, STAND_ID), 4)
+                        .name(STAND_ID)
                         .tracker(64, 3, true)
                         .build()
 

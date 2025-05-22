@@ -13,4 +13,6 @@ public class JojoItems {
     public static final Item AJA_STONE_MASK = new ItemAjaStoneMask();
     public static final Item SPIN_ARROW = new ItemSpinArrow();
     public static final Item STEEL_BALL = new ItemSteelball();
+    public static final Item STAND_ARROW = new ItemStandArrow();
+    public static final Item STAND = new ItemStand();
 }
