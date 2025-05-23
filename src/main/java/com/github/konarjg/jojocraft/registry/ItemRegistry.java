@@ -20,7 +20,6 @@ public class ItemRegistry {
                 JojoItems.SPIN_ARROW,
                 JojoItems.STEEL_BALL,
                 JojoItems.STAND_ARROW,
-                JojoItems.STAND,
                 new ItemBlock(JojoBlocks.COFFIN).setRegistryName(JojoBlocks.COFFIN.getRegistryName()),
                 new ItemBlock(JojoBlocks.BLACK_PLANKS).setRegistryName(JojoBlocks.BLACK_PLANKS.getRegistryName())
         );

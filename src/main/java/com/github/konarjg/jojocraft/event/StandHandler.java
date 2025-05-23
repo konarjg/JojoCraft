@@ -1,13 +1,11 @@
 package com.github.konarjg.jojocraft.event;
 
 import com.github.konarjg.jojocraft.JojoCraft;
-import com.github.konarjg.jojocraft.entity.EntityStand;
+import com.github.konarjg.jojocraft.entity.stand.EntityStand;
 import com.github.konarjg.jojocraft.gui.GuiStandStats;
 import com.github.konarjg.jojocraft.objectholder.JojoKeybinds;
-import com.github.konarjg.jojocraft.packet.SetStandModePacket;
-import com.github.konarjg.jojocraft.packet.StandPunchPacket;
-import com.github.konarjg.jojocraft.packet.SyncStandPacket;
-import com.github.konarjg.jojocraft.packet.ToggleStandPacket;
+import com.github.konarjg.jojocraft.objectholder.JojoSounds;
+import com.github.konarjg.jojocraft.packet.*;
 import com.github.konarjg.jojocraft.stand.capability.Stand;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -26,13 +24,7 @@ import java.util.UUID;
 public class StandHandler {
     @CapabilityInject(Stand.class)
     public static final Capability<Stand> CAPABILITY_STAND = null;
-
-    @SubscribeEvent
-    public static void onClientTick(TickEvent.ClientTickEvent event) {
-        if (event.phase == TickEvent.Phase.START && JojoKeybinds.PUNCH.isKeyDown()) {
-            JojoCraft.NETWORK_INSTANCE.sendToServer(new StandPunchPacket());
-        }
-    }
+    public static EntityStand timeStopper = null;
 
     @SubscribeEvent
     public static void onKeyInput(InputEvent.KeyInputEvent event) {
@@ -43,12 +35,14 @@ public class StandHandler {
             Minecraft.getMinecraft().displayGuiScreen(new GuiStandStats(player, stand));
         } else if (JojoKeybinds.SUMMON_STAND.isPressed()) {
             JojoCraft.NETWORK_INSTANCE.sendToServer(new ToggleStandPacket());
-        }
-        else if (JojoKeybinds.MANUAL_MODE.isPressed()) {
+        } else if (JojoKeybinds.MANUAL_MODE.isPressed()) {
             JojoCraft.NETWORK_INSTANCE.sendToServer(new SetStandModePacket(true));
-        }
-        else if (JojoKeybinds.FOLLOW_MODE.isPressed()) {
+        } else if (JojoKeybinds.FOLLOW_MODE.isPressed()) {
             JojoCraft.NETWORK_INSTANCE.sendToServer(new SetStandModePacket(false));
+        } else if (JojoKeybinds.POWER.isPressed()) {
+            JojoCraft.NETWORK_INSTANCE.sendToServer(new StandPowerPacket());
+        } else if (JojoKeybinds.PUNCH.isPressed()) {
+            JojoCraft.NETWORK_INSTANCE.sendToServer(new StandPunchPacket());
         }
     }
 

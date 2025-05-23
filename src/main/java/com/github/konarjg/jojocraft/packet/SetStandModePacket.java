@@ -1,6 +1,6 @@
 package com.github.konarjg.jojocraft.packet;
 
-import com.github.konarjg.jojocraft.entity.EntityStand;
+import com.github.konarjg.jojocraft.entity.stand.EntityStand;
 import com.github.konarjg.jojocraft.event.StandHandler;
 import com.github.konarjg.jojocraft.stand.capability.Stand;
 import io.netty.buffer.ByteBuf;

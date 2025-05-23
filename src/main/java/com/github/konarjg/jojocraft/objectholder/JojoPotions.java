@@ -14,4 +14,6 @@ public class JojoPotions {
     public static final Potion HAMON_EFFECT = new PotionHamon();
     public static final Potion SPIN_EFFECT = new PotionSpin();
     public static final Potion GOLDEN_SPIN_EFFECT = new PotionGoldenSpin();
+    public static final Potion TIME_STOP_EFFECT = new PotionTimeStop();
+    public static final Potion POWER_COOLDOWN_EFFECT = new PotionPowerCooldown();
 }

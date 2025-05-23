@@ -1,14 +1,18 @@
-package com.github.konarjg.jojocraft.entity;
+package com.github.konarjg.jojocraft.entity.stand;
 
+import com.github.konarjg.jojocraft.JojoCraft;
 import com.github.konarjg.jojocraft.event.StandHandler;
 import com.github.konarjg.jojocraft.objectholder.JojoDamageSources;
+import com.github.konarjg.jojocraft.objectholder.JojoSounds;
 import com.github.konarjg.jojocraft.stand.capability.Stand;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.SoundManager;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -17,15 +21,20 @@ import net.minecraft.world.World;
 import java.util.List;
 import java.util.UUID;
 
-public class EntityStand extends Entity {
-    private UUID userId;
-    private Stand stand;
-    private boolean active;
-    private boolean controlled;
-    private BlockPos target;
+public abstract class EntityStand extends Entity {
+    protected UUID userId;
+    protected Stand stand;
+    protected boolean active;
+    protected boolean controlled;
+    protected BlockPos target;
+    protected SoundEvent punchSound;
 
-    private boolean punchScheduled;
+    private boolean punching;
     private int punchDelay;
+    private int punchingDuration;
+
+    protected boolean powerActive;
+    protected int powerCooldown;
 
     public EntityStand(World world) {
         super(world);
@@ -36,14 +45,18 @@ public class EntityStand extends Entity {
 
     }
 
-    public EntityStand(EntityPlayer user, World world, Stand stand) {
+    public EntityStand(EntityPlayer user, World world, Stand stand, SoundEvent punchSound) {
         super(world);
         this.userId = user.getUniqueID();
         this.stand = stand;
         this.active = true;
         this.controlled = false;
         this.target = null;
+        this.powerActive = false;
     }
+
+    public abstract void usePower();
+    protected abstract void power(EntityPlayer user);
 
     private void handleFollow(EntityPlayer user) {
         Vec3d look = user.getLook(0.1f);
@@ -84,13 +97,37 @@ public class EntityStand extends Entity {
         }
     }
 
-    public void schedulePunch() {
-        if (punchScheduled) {
+    private void handlePunching() {
+        if (!punching) {
+            return;
+        }
+
+        if (punchingDuration > 0) {
+            if (punchDelay > 0) {
+                punchDelay--;
+            }
+            else {
+                punch();
+                punchDelay = 7 - stand.getStats().getSpeed();
+            }
+
+            punchingDuration--;
+            return;
+        }
+
+        punching = false;
+        punchingDuration = 0;
+    }
+
+    public void startPunching() {
+        if (punching) {
             return;
         }
 
         punchDelay = 7 - stand.getStats().getSpeed();
-        punchScheduled = true;
+        punchingDuration = 100;
+        world.playSound(null, posX, posY, posZ, punchSound, SoundCategory.MASTER, 1.0f, 1.0f);
+        punching = true;
     }
 
     public void punch() {
@@ -98,7 +135,7 @@ public class EntityStand extends Entity {
         Vec3d forward = new Vec3d(look.x, 0, look.z);
 
         Vec3d hitboxStart = forward.add(posX, posY, posZ);
-        Vec3d hitboxEnd = hitboxStart.add(forward).add(0, 1, 0);
+        Vec3d hitboxEnd = hitboxStart.add(forward.scale(3f)).add(0, 1, 0);
 
         AxisAlignedBB hitbox = new AxisAlignedBB(hitboxStart, hitboxEnd);
         List<Entity> potentialTargets = world.getEntitiesWithinAABB(Entity.class, hitbox);
@@ -112,9 +149,11 @@ public class EntityStand extends Entity {
             }
         }
 
-        if (target != null) {
-            target.attackEntityFrom(JojoDamageSources.STAND_DAMAGE_SOURCE, getStand().getStats().getPower());
+        if (target == null) {
+            return;
         }
+
+        target.attackEntityFrom(JojoDamageSources.STAND_DAMAGE_SOURCE, stand.getStats().getPower());
     }
 
     @Override
@@ -126,6 +165,12 @@ public class EntityStand extends Entity {
         EntityPlayer user = getUser();
 
         if (user == null) {
+            return false;
+        }
+
+        double dodgeChance = 0.04 * stand.getStats().getPrecision();
+
+        if (Math.random() < dodgeChance) {
             return false;
         }
 
@@ -153,17 +198,15 @@ public class EntityStand extends Entity {
             return;
         }
 
-        if (punchScheduled) {
-            if (punchDelay > 0) {
-                punchDelay--;
-            }
-            else {
-                punch();
-                punchScheduled = false;
-                punchDelay = 0;
-            }
+        if (powerActive) {
+            power(user);
+        } else if (powerCooldown > 0){
+            powerCooldown--;
+        } else {
+            powerCooldown = 0;
         }
 
+        handlePunching();
         handleRange(user);
         setRotation(user.rotationYaw, user.rotationPitch);
 
@@ -231,6 +274,7 @@ public class EntityStand extends Entity {
         compound = super.writeToNBT(compound);
         compound.setUniqueId("user", userId);
         compound.setBoolean("active", active);
+        compound.setInteger("powerCooldown", powerCooldown);
         return compound;
     }
 
@@ -239,6 +283,7 @@ public class EntityStand extends Entity {
         super.readFromNBT(compound);
         userId = compound.getUniqueId("user");
         active = compound.getBoolean("active");
+        powerCooldown = compound.getInteger("powerCooldown");
         noClip = !active;
         setInvisible(!active);
     }
@@ -248,6 +293,7 @@ public class EntityStand extends Entity {
         NBTTagCompound compound = super.serializeNBT();
         compound.setUniqueId("user", userId);
         compound.setBoolean("active", active);
+        compound.setInteger("powerCooldown", powerCooldown);
         return compound;
     }
 
@@ -256,6 +302,7 @@ public class EntityStand extends Entity {
         super.deserializeNBT(compound);
         userId = compound.getUniqueId("user");
         active = compound.getBoolean("active");
+        powerCooldown = compound.getInteger("powerCooldown");
         noClip = !active;
         setInvisible(!active);
     }
@@ -264,6 +311,7 @@ public class EntityStand extends Entity {
     public void readEntityFromNBT(NBTTagCompound compound) {
         userId = compound.getUniqueId("user");
         active = compound.getBoolean("active");
+        powerCooldown = compound.getInteger("powerCooldown");
         noClip = !active;
         setInvisible(!active);
     }
@@ -272,6 +320,7 @@ public class EntityStand extends Entity {
     public void writeEntityToNBT(NBTTagCompound compound) {
         compound.setUniqueId("user", userId);
         compound.setBoolean("active", active);
+        compound.setInteger("powerCooldown", powerCooldown);
         noClip = !active;
         setInvisible(!active);
     }

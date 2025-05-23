@@ -11,5 +11,7 @@ effect.ultimate_life_form=Ultimate Life Form
 effect.hamon=Hamon User
 effect.spin=Spin User
 effect.golden_spin=Golden Spin User
+effect.time_stop=Time Stop
+effect.power_cooldown=Stand Power Cooldown
 tile.coffin.name=Coffin
 tile.black_planks.name=Black Planks

@@ -6,6 +6,7 @@ import com.github.konarjg.jojocraft.event.*;
 import com.github.konarjg.jojocraft.objectholder.JojoBlocks;
 import com.github.konarjg.jojocraft.objectholder.JojoKeybinds;
 import com.github.konarjg.jojocraft.objectholder.JojoPotions;
+import com.github.konarjg.jojocraft.objectholder.JojoSounds;
 import com.github.konarjg.jojocraft.packet.*;
 import com.github.konarjg.jojocraft.power.CriticalChance;
 import com.github.konarjg.jojocraft.power.CriticalChanceStorage;
@@ -16,12 +17,15 @@ import com.github.konarjg.jojocraft.stand.capability.Stand;
 import com.github.konarjg.jojocraft.stand.capability.StandStorage;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.SoundEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityManager;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
@@ -46,6 +50,8 @@ public class JojoCraft {
         NETWORK_INSTANCE.registerMessage(ToggleStandPacket.Handler.class, ToggleStandPacket.class, 4, Side.SERVER);
         NETWORK_INSTANCE.registerMessage(SetStandModePacket.Handler.class, SetStandModePacket.class, 5, Side.SERVER);
         NETWORK_INSTANCE.registerMessage(StandPunchPacket.Handler.class, StandPunchPacket.class, 6, Side.SERVER);
+        NETWORK_INSTANCE.registerMessage(StandPowerPacket.Handler.class, StandPowerPacket.class, 7, Side.SERVER);
+        NETWORK_INSTANCE.registerMessage(SetGrayFogPacket.Handler.class, SetGrayFogPacket.class, 8, Side.CLIENT);
     }
 
     @Mod.EventHandler
@@ -56,6 +62,7 @@ public class JojoCraft {
         MinecraftForge.EVENT_BUS.register(ItemRegistry.class);
         MinecraftForge.EVENT_BUS.register(ModelRegistry.class);
         MinecraftForge.EVENT_BUS.register(EntityRegistry.class);
+        MinecraftForge.EVENT_BUS.register(JojoSounds.class);
         CapabilityManager.INSTANCE.register(Power.class, new PowerStorage(), Power::new);
         CapabilityManager.INSTANCE.register(CriticalChance.class, new CriticalChanceStorage(), CriticalChance::new);
         CapabilityManager.INSTANCE.register(Stand.class, new StandStorage(), Stand::new);
@@ -69,7 +76,9 @@ public class JojoCraft {
             JojoPotions.ULTIMATE_LIFE_FORM_EFFECT,
             JojoPotions.HAMON_EFFECT,
             JojoPotions.SPIN_EFFECT,
-            JojoPotions.GOLDEN_SPIN_EFFECT
+            JojoPotions.GOLDEN_SPIN_EFFECT,
+            JojoPotions.TIME_STOP_EFFECT,
+            JojoPotions.POWER_COOLDOWN_EFFECT
         );
 
         MinecraftForge.EVENT_BUS.register(PowerHandler.class);
@@ -81,6 +90,7 @@ public class JojoCraft {
         MinecraftForge.EVENT_BUS.register(GoldenSpinHandler.class);
         MinecraftForge.EVENT_BUS.register(StandHandler.class);
         MinecraftForge.EVENT_BUS.register(NPCSpawner.class);
+        MinecraftForge.EVENT_BUS.register(TimeHandler.class);
 
         OreDictionary.registerOre("plankWood", new ItemStack(JojoBlocks.BLACK_PLANKS));
         registerMessages();

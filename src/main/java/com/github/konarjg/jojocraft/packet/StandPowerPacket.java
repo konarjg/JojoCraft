@@ -3,8 +3,10 @@ package com.github.konarjg.jojocraft.packet;
 import com.github.konarjg.jojocraft.entity.stand.EntityStand;
 import com.github.konarjg.jojocraft.event.StandHandler;
 import com.github.konarjg.jojocraft.event.TimeHandler;
+import com.github.konarjg.jojocraft.objectholder.JojoSounds;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -12,8 +14,8 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 import java.util.UUID;
 
-public class StandPunchPacket implements IMessage {
-    public StandPunchPacket() {
+public class StandPowerPacket implements IMessage {
+    public StandPowerPacket() {
 
     }
 
@@ -27,10 +29,10 @@ public class StandPunchPacket implements IMessage {
 
     }
 
-    public static class Handler implements IMessageHandler<StandPunchPacket, IMessage> {
+    public static class Handler implements IMessageHandler<StandPowerPacket, IMessage> {
 
         @Override
-        public IMessage onMessage(StandPunchPacket message, MessageContext ctx) {
+        public IMessage onMessage(StandPowerPacket message, MessageContext ctx) {
             EntityPlayerMP player = ctx.getServerHandler().player;
             WorldServer world = player.getServerWorld();
             UUID entityId = player.getCapability(StandHandler.CAPABILITY_STAND, null).getEntityId();
@@ -49,7 +51,7 @@ public class StandPunchPacket implements IMessage {
                 return null;
             }
 
-            stand.startPunching();
+            stand.usePower();
             return null;
         }
     }

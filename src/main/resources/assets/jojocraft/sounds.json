@@ -1,0 +1,24 @@
+{
+  "star_platinum_time_stop_activate": {
+    "category": "master",
+    "sounds": [
+      "jojocraft:star_platinum_time_stop_activate"
+    ]
+  },
+  "time_stop_deactivate": {
+    "category": "master",
+    "sounds": [
+      {
+        "name": "jojocraft:time_stop_deactivate"
+      }
+    ]
+  },
+  "star_platinum_punch": {
+    "category": "master",
+    "sounds": [
+      {
+        "name": "jojocraft:star_platinum_punch"
+      }
+    ]
+  }
+}
